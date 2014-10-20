@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.hollysys.holliscadamobile.LoginActivity" >
+
+   <TextView
+        android:id="@+id/lblLoginUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="180dp"
+        android:text="@string/username" />
+
+    <TextView
+        android:id="@+id/lblLoginPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="240dp"
+        android:text="@string/password" />
+
+    <EditText
+        android:id="@+id/txtLoginUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/lblLoginUserName"
+        android:layout_alignBottom="@id/lblLoginUserName"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/lblLoginUserName"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/txtLoginPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblLoginPassword"
+        android:layout_alignBottom="@+id/lblLoginPassword"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/lblLoginPassword"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btnLoginLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lblLoginPassword"
+        android:layout_alignRight="@+id/txtLoginPassword"
+        android:layout_below="@+id/txtLoginPassword"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/login" />
+
+    <Button
+        android:id="@+id/btnLoginClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnLoginLogin"
+        android:layout_alignRight="@+id/btnLoginLogin"
+        android:layout_below="@+id/btnLoginLogin"
+        android:layout_marginTop="20dp"
+        android:text="@string/close" />
+
+</RelativeLayout>
