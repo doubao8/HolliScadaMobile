@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <Domains>
     <Domain name="OCC">
-        <MenuItem AlarmSupport="0" Index="0" MenuIcon="fzys.png" MenuName="总貌" Page="" Parameter="">
+        <MenuItem AlarmSupport="0" Index="0" MenuIcon="zong_mao.png" MenuName="总貌" Page="" Parameter="">
             <MenuItem AlarmSupport="0" Index="0_0" MenuIcon="" MenuName="采掘工程平面图" Page="MK_MAP" Parameter=""/>
             <MenuItem AlarmSupport="0" Index="0_1" MenuIcon="" MenuName="3-1煤" Page="" Parameter="">
                 <MenuItem AlarmSupport="0" Index="0_1_0" MenuIcon="" MenuName="监测监控" Page="MK_MAP" Parameter=""/>
@@ -18,7 +18,7 @@
                 <MenuItem AlarmSupport="0" Index="0_2_3" MenuIcon="" MenuName="煤运输" Page="MK_MAP" Parameter=""/>
             </MenuItem>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="1" MenuIcon="fzys.png" MenuName="综采" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="1" MenuIcon="zong_cai.png" MenuName="综采" Page="" Parameter="">
             <MenuItem AlarmSupport="" Index="1_0" MenuIcon="" MenuName="31109综采面" Page="" Parameter="">
                 <MenuItem AlarmSupport="1" Index="1_0_0" MenuIcon="" MenuName="综采工作面" Page="C906ZCSYS1" Parameter=""/>
                 <MenuItem AlarmSupport="1" Index="1_0_1" MenuIcon="" MenuName="采煤机画面" Page="C906ZCSYS4" Parameter=""/>
@@ -53,13 +53,13 @@
                 <MenuItem AlarmSupport="1" Index="1_2_8" MenuIcon="" MenuName="支架压力分析" Page="GZM_YLFX" Parameter=""/>
             </MenuItem>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="2" MenuIcon="fzys.png" MenuName="掘进" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="2" MenuIcon="jue_jin.png" MenuName="掘进" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="2_0" MenuIcon="" MenuName="连采一队" Page="连采一队" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="2_1" MenuIcon="" MenuName="连采二队" Page="连采二队" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="2_2" MenuIcon="" MenuName="连采三队" Page="连采三队" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="2_3" MenuIcon="" MenuName="连采五队" Page="连采五队" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="3" MenuIcon="fzys.png" MenuName="主运输" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="3" MenuIcon="zhu_yun_shu.png" MenuName="主运输" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="3_0" MenuIcon="" MenuName="胶带运输系统图" Page="主运输" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="3_1" MenuIcon="" MenuName="综采1队顺槽皮带" Page="综采1队顺1皮带" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="3_2" MenuIcon="" MenuName="一盘区集运皮带" Page="一盘区集运皮带" Parameter=""/>
@@ -73,10 +73,10 @@
             <MenuItem AlarmSupport="1" Index="3_10" MenuIcon="" MenuName="综采3队顺槽皮带" Page="31202顺槽皮带" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="3_11" MenuIcon="" MenuName="原煤仓及仓上" Page="刮板机原煤仓" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="4" MenuIcon="fzys.png" MenuName="辅助运输" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="4" MenuIcon="fu_zhu_yun_shu.png" MenuName="辅助运输" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="4_0" MenuIcon="" MenuName="红绿灯分布图" Page="辅运概图" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="5" MenuIcon="fzys.png" MenuName="供电" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="5" MenuIcon="gong_dian.png" MenuName="供电" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="5_0" MenuIcon="" MenuName="供电系统总图" Page="供电系统总图" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="5_1" MenuIcon="" MenuName="备用" Page="备用" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="5_2" MenuIcon="" MenuName="主井35KV变电站" Page="主井35KV" Parameter=""/>
@@ -98,10 +98,10 @@
             <MenuItem AlarmSupport="1" Index="5_18" MenuIcon="" MenuName="盘区5号变电所" Page="盘区5#" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="5_19" MenuIcon="" MenuName="2号通风机房变电所" Page="2号通风机房" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="6" MenuIcon="fzys.png" MenuName="供水" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="6" MenuIcon="gong_shui.png" MenuName="供水" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="6_0" MenuIcon="" MenuName="井下加压泵房" Page="C906GSSYS1" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="7" MenuIcon="fzys.png" MenuName="排水" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="7" MenuIcon="pai_shui.png" MenuName="排水" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="7_0" MenuIcon="" MenuName="井下排水系统总图" Page="井下排水系统总图" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="7_1" MenuIcon="" MenuName="中央1#水泵房" Page="中央1#水泵房" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="7_2" MenuIcon="" MenuName="中央2#水泵房" Page="中央2#水泵房_1" Parameter=""/>
@@ -111,7 +111,7 @@
             <MenuItem AlarmSupport="1" Index="7_6" MenuIcon="" MenuName="盘区4#水泵房" Page="盘区4#水泵房" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="7_7" MenuIcon="" MenuName="防水闸门" Page="防水闸门系统" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="8" MenuIcon="fzys.png" MenuName="通风" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="8" MenuIcon="tong_feng.png" MenuName="通风" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="8_0" MenuIcon="" MenuName="1#风机房" Page="1#风机房" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="8_1" MenuIcon="" MenuName="2#风机房" Page="2#风机房" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="8_2" MenuIcon="" MenuName="井下自动风门" Page="井下自动风门_1" Parameter=""/>
@@ -121,31 +121,31 @@
             <MenuItem AlarmSupport="1" Index="8_6" MenuIcon="" MenuName="其它1" Page="其它1" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="8_7" MenuIcon="" MenuName="其它2" Page="其它2" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="9" MenuIcon="fzys.png" MenuName="压风" Page="YF" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="10" MenuIcon="fzys.png" MenuName="安全监控" Page="MechanizedMining_T" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="11" MenuIcon="fzys.png" MenuName="人员定位" Page="MK_RYGL" Parameter="">
+        <MenuItem AlarmSupport="1" Index="9" MenuIcon="ya_feng.png" MenuName="压风" Page="YF" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="10" MenuIcon="an_quan_jian_kong.png" MenuName="安全监控" Page="MechanizedMining_T" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="11" MenuIcon="ren_yuan_ding_wei.png" MenuName="人员定位" Page="MK_RYGL" Parameter="">
             <MenuItem AlarmSupport="1" Index="11_0" MenuIcon="" MenuName="人员定位" Page="MK_RYGL" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="11_1" MenuIcon="" MenuName="信息查询" Page="C265RYDWSYS1" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="12" MenuIcon="fzys.png" MenuName="视频" Page="MK_VIDEO" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="13" MenuIcon="fzys.png" MenuName="广播" Page="MK_PA" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="14" MenuIcon="fzys.png" MenuName="电话" Page="GB" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="15" MenuIcon="fzys.png" MenuName="洗选煤" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="12" MenuIcon="shi_pin.png" MenuName="视频" Page="MK_VIDEO" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="13" MenuIcon="guang_bo.png" MenuName="广播" Page="MK_PA" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="14" MenuIcon="dian_hua.png" MenuName="电话" Page="GB" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="15" MenuIcon="xi_xuan_mei.png" MenuName="洗选煤" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="15_0" MenuIcon="" MenuName="洗煤厂" Page="C906XMCSYS1" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="15_1" MenuIcon="" MenuName="行政电话" Page="XZDH" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="15_2" MenuIcon="" MenuName="调度电话" Page="DDDH" Parameter=""/>
             <MenuItem AlarmSupport="1" Index="15_3" MenuIcon="" MenuName="无线电话" Page="WXDH" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="16" MenuIcon="fzys.png" MenuName="装车" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="16" MenuIcon="zhuang_che.png" MenuName="装车" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="16_0" MenuIcon="" MenuName="装车站" Page="C906ZHCSYS1" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="17" MenuIcon="fzys.png" MenuName="束管监测" Page="HZSG" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="18" MenuIcon="fzys.png" MenuName="矿压监测" Page="DBYL" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="19" MenuIcon="fzys.png" MenuName="水文监测" Page="" Parameter="">
+        <MenuItem AlarmSupport="1" Index="17" MenuIcon="shu_guan_jian_ce.png" MenuName="束管监测" Page="HZSG" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="18" MenuIcon="kuang_ya_jian_ce.png" MenuName="矿压监测" Page="DBYL" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="19" MenuIcon="shui_wen_jian_ce.png" MenuName="水文监测" Page="" Parameter="">
             <MenuItem AlarmSupport="1" Index="19_0" MenuIcon="" MenuName="水文监测" Page="水文监测" Parameter=""/>
         </MenuItem>
-        <MenuItem AlarmSupport="1" Index="20" MenuIcon="fzys.png" MenuName="热力交换站" Page="GL" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="21" MenuIcon="fzys.png" MenuName="矿灯房" Page="KDF" Parameter=""/>
-        <MenuItem AlarmSupport="1" Index="22" MenuIcon="fzys.png" MenuName="污水处理厂" Page="42煤污水处理厂" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="20" MenuIcon="re_li_jiao_huan_zhan.png" MenuName="热力交换站" Page="GL" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="21" MenuIcon="kuang_deng_fang.png" MenuName="矿灯房" Page="KDF" Parameter=""/>
+        <MenuItem AlarmSupport="1" Index="22" MenuIcon="wu_shui_chu_li_chang.png" MenuName="污水处理厂" Page="42煤污水处理厂" Parameter=""/>
     </Domain>
 </Domains>

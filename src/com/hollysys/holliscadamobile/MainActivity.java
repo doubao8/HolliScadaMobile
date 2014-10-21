@@ -6,6 +6,7 @@ import java.util.List;
 import org.w3c.dom.Element;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -26,6 +29,7 @@ import android.widget.ViewFlipper;
 
 import com.hollysys.Util.ParseXML;
 import com.hollysys.Util.Util;
+import com.hollysys.basic.Dialog;
 import com.hollysys.basic.ExitApplication;
 
 public class MainActivity extends Activity implements OnGestureListener, OnTouchListener  {
@@ -70,6 +74,8 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 			}
 			MainAdapter adapter = new MainAdapter(nodes);
 			view.setAdapter(adapter); //设置Adapter
+			view.setOnItemClickListener(new ItemClickListener());
+			
 			myViewFlipper.addView(view);
 			
 			//设置底部原点切换显示效果
@@ -114,15 +120,19 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 	
 	class MainAdapter extends BaseAdapter {
 
-		private List<Element> childNodes = null;
+		private List<Element> childElements = null;
 
 		public MainAdapter(List<Element> childNodes) {
-			this.childNodes = childNodes;
+			this.childElements = childNodes;
 		}
 
+		public List<Element> getChildElement(){
+			return childElements;
+		}
+		
 		@Override
 		public int getCount() {
-			return childNodes.size();
+			return childElements.size();
 		}
 
 		@Override
@@ -151,8 +161,8 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 				holder = (ViewHolder) convertView.getTag();
 			}
 			
-			if(null!=childNodes && childNodes.size()>0){
-				Element node =(Element) childNodes.get(position);
+			if(null!=childElements && childElements.size()>0){
+				Element node =(Element) childElements.get(position);
 				String title = node.getAttribute("MenuName");
 				String menuIcon = node.getAttribute("MenuIcon");
 				String imgName = "";
@@ -161,6 +171,8 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 				}
 				if(!imgName.equals("")){
 					Integer imgCode = (Integer)Util.getPropertyValue(R.drawable.class,imgName);
+					if(null==imgCode)
+						imgCode = (Integer)Util.getPropertyValue(R.drawable.class,"mo_ren");
 					holder.img.setBackgroundResource(imgCode);
 				}
 				holder.title.setText(title);
@@ -168,6 +180,28 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 
 			return convertView;
 		}
+	}
+
+	//当AdapterView被单击(触摸屏或者键盘)，则返回的Item单击事件     
+	class  ItemClickListener implements OnItemClickListener  {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			MainAdapter adapter = (MainAdapter)parent.getAdapter();
+			List<Element> childElements = adapter.getChildElement();
+			Element element =(Element) childElements.get(position);
+			if(element.getAttribute("Page").equals("")){
+				Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
+				ParseXML.setCurrentElement(element);
+				intent.putExtra("MenuName", element.getAttribute("MenuName"));
+				startActivity(intent);
+			}
+			else{
+				Dialog.alert(MainActivity.this, element.getAttribute("MenuName"));
+			}
+		}
+		
 	}
 
 	@Override

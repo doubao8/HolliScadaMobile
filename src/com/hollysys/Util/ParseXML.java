@@ -20,6 +20,7 @@ import android.content.Context;
 public class ParseXML {
 	private static Element Root;
 	private static String fileName = "NaviMenuInfo.xml";
+	private static Element currentElement;
 
 	// 解析文件，获取根节点
 	public static void parseXml(Context context) {
@@ -69,5 +70,13 @@ public class ParseXML {
 		    }
 		 }
 		return list;
+	}
+
+	public static Element getCurrentElement() {
+		return currentElement;
+	}
+
+	public static void setCurrentElement(Element currentElement) {
+		ParseXML.currentElement = currentElement;
 	}
 }

@@ -11,5 +11,7 @@
     <string name="loginFail">登录失败</string>
     <string name="confirm">确定</string>
     <string name="img_title">标题图片</string>
+    <string name="title_activity_second_menu">SecondMenuActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
