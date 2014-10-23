@@ -13,5 +13,6 @@
     <string name="img_title">标题图片</string>
     <string name="title_activity_second_menu">SecondMenuActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_menu">MenuActivity</string>
 
 </resources>

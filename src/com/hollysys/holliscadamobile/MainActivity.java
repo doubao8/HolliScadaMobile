@@ -191,10 +191,23 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 			MainAdapter adapter = (MainAdapter)parent.getAdapter();
 			List<Element> childElements = adapter.getChildElement();
 			Element element =(Element) childElements.get(position);
-			if(element.getAttribute("Page").equals("")){
-				Intent intent = new Intent(MainActivity.this, SecondMenuActivity.class);
+			List<Element> childs = ParseXML.findChild(element);
+			if(!childs.isEmpty()){
+				Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 				ParseXML.setCurrentElement(element);
 				intent.putExtra("MenuName", element.getAttribute("MenuName"));
+				
+				String menuIcon = element.getAttribute("MenuIcon");
+				String imgName = "";
+				if(!menuIcon.equals("")){
+					imgName = (menuIcon.split("\\."))[0];
+				}
+				if(!imgName.equals("")){
+					Integer imgCode = (Integer)Util.getPropertyValue(R.drawable.class,imgName);
+					if(null==imgCode)
+						imgCode = (Integer)Util.getPropertyValue(R.drawable.class,"mo_ren");
+					intent.putExtra("MenuIcon", imgCode);
+				}
 				startActivity(intent);
 			}
 			else{

@@ -51,19 +51,23 @@ public final class R {
         public static final int re_li_jiao_huan_zhan=0x7f020011;
         public static final int ren_yuan_ding_wei=0x7f020012;
         public static final int shi_pin=0x7f020013;
-        public static final int shu_guan_jian_ce=0x7f020014;
-        public static final int shui_wen_jian_ce=0x7f020015;
-        public static final int tong_feng=0x7f020016;
-        public static final int wu_shui_chu_li_chang=0x7f020017;
-        public static final int ya_feng=0x7f020018;
-        public static final int zhu_yun=0x7f020019;
-        public static final int zhu_yun_shu=0x7f02001a;
-        public static final int zhuang_che=0x7f02001b;
-        public static final int zong_cai=0x7f02001c;
-        public static final int zong_mao=0x7f02001d;
+        public static final int shou_suo=0x7f020014;
+        public static final int shou_suo1=0x7f020015;
+        public static final int shu_guan_jian_ce=0x7f020016;
+        public static final int shui_wen_jian_ce=0x7f020017;
+        public static final int tong_feng=0x7f020018;
+        public static final int wu_shui_chu_li_chang=0x7f020019;
+        public static final int ya_feng=0x7f02001a;
+        public static final int zhan_kai=0x7f02001b;
+        public static final int zhan_kai1=0x7f02001c;
+        public static final int zhu_yun=0x7f02001d;
+        public static final int zhu_yun_shu=0x7f02001e;
+        public static final int zhuang_che=0x7f02001f;
+        public static final int zong_cai=0x7f020020;
+        public static final int zong_mao=0x7f020021;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000b;
+        public static final int action_settings=0x7f09000d;
         public static final int btnLoginClose=0x7f090005;
         public static final int btnLoginLogin=0x7f090004;
         public static final int dot_layout=0x7f090007;
@@ -71,6 +75,8 @@ public final class R {
         public static final int lblLoginPassword=0x7f090001;
         public static final int lblLoginUserName=0x7f090000;
         public static final int menuViewFlipper=0x7f090006;
+        public static final int menu_img=0x7f09000c;
+        public static final int menu_title=0x7f09000b;
         public static final int second_menu=0x7f090008;
         public static final int title=0x7f09000a;
         public static final int txtLoginPassword=0x7f090003;
@@ -79,14 +85,17 @@ public final class R {
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int activity_second_menu=0x7f030002;
-        public static final int first_menu=0x7f030003;
-        public static final int grid_view=0x7f030004;
+        public static final int activity_menu=0x7f030002;
+        public static final int activity_second_menu=0x7f030003;
+        public static final int first_menu=0x7f030004;
+        public static final int grid_view=0x7f030005;
+        public static final int text_image_line=0x7f030006;
     }
     public static final class menu {
         public static final int login=0x7f080000;
         public static final int main=0x7f080001;
-        public static final int second_menu=0x7f080002;
+        public static final int menu=0x7f080002;
+        public static final int second_menu=0x7f080003;
     }
     public static final class string {
         public static final int action_settings=0x7f060002;
@@ -98,6 +107,7 @@ public final class R {
         public static final int login=0x7f060005;
         public static final int loginFail=0x7f060007;
         public static final int password=0x7f060004;
+        public static final int title_activity_menu=0x7f06000c;
         public static final int title_activity_second_menu=0x7f06000a;
         public static final int title_name=0x7f060001;
         public static final int username=0x7f060003;
