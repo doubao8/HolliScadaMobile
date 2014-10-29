@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+    android:layout_height="fill_parent" 
     android:numColumns="3"  
 	android:verticalSpacing="@dimen/gridview_vertical_Spacing"  
 	android:horizontalSpacing="@dimen/gridview_horizontal_Spacing"  
-	android:stretchMode="columnWidth"  
-	android:gravity="center"
+	android:stretchMode="columnWidth"
+	android:gravity="fill"
     >
     
 </GridView>

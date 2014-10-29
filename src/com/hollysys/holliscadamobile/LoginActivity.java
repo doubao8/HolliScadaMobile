@@ -1,8 +1,12 @@
 package com.hollysys.holliscadamobile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.EditText;
 
 import com.hollysys.basic.Dialog;
 import com.hollysys.basic.ExitApplication;
+import com.hollysys.util.ParseXML;
 
 public class LoginActivity extends Activity {
 	
@@ -79,14 +84,18 @@ public class LoginActivity extends Activity {
 
 		if ("admin".equals(this.txtLoginUsername.getText().toString())
 				&& "123".equals(this.txtLoginPassword.getText().toString())) {
-
+			
+			Intent intentService = new Intent();
+			intentService.setAction("com.hollysys.service.AlARM_SERVER");
+			startService(intentService); //启动报警服务
+			
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
 			Bundle bundle = new Bundle();
 			bundle.putString("username", this.txtLoginUsername.getText()
 					.toString());
 			intent.putExtra("loginInfo", bundle);
-
+			
 			startActivity(intent);
 
 		} else {
@@ -96,6 +105,10 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void doBtnCloseClick(View v) {
+		Intent intent = new Intent();
+		intent.setAction("com.hollysys.service.AlARM_SERVER");
+		stopService(intent); //退出报警服务
+		Log.i("TAG", "LoginActivity Stop AlARM_SERVER");
 		ExitApplication.getInstance().exit();
 	}
 }

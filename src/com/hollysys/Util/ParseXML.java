@@ -1,4 +1,4 @@
-package com.hollysys.Util;
+package com.hollysys.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +72,69 @@ public class ParseXML {
 		return list;
 	}
 
+	/**
+	 * 设置所有的属性值为一个值
+	 * @param attrName 属性名称
+	 * @param value 值
+	 */
+	public static void setAllElementAttr(String attrName, String value){
+		if(null == Root)
+			return;
+		NodeList list = Root.getElementsByTagName("MenuItem");
+		for(int i=0; i<list.getLength(); i++){
+			Element e = (Element)list.item(i);
+			e.setAttribute(attrName, value);
+		}
+	}
+	
+	/**
+	 * 将与list给出的Page属性值相等的元素的IsAlarmming属性设为1
+	 * @param list
+	 */
+	public static void setIsAlarmmingEqualsOne(List<String> list){
+		if(list.isEmpty() || null==Root)
+			return;
+		for(String page : list){
+			loopSetElement(Root, page);
+		}
+	}
+
+	/**
+	 * 递归设置IsAlarmming值
+	 * @param element
+	 * @param page
+	 * @return
+	 */
+	private static boolean loopSetElement(Element element, String page) {
+		boolean isSetOne = false;
+		if(element.getAttribute("Page").equals(page)){
+			element.setAttribute("IsAlarmming", "1");
+			return true;
+		}
+		List<Element> childList = findChild(element);
+		if(childList.isEmpty())
+			return false;
+		for(Element e : childList){
+			if(loopSetElement(e,page))
+				isSetOne=true;	
+		}
+		if(isSetOne)
+			element.setAttribute("IsAlarmming", "1");
+		return isSetOne;
+	}
+	
+	/**
+	 * 得到当前使用的Element
+	 * @return
+	 */
 	public static Element getCurrentElement() {
 		return currentElement;
 	}
 
+	/**
+	 * 设置当前使用的Element
+	 * @param currentElement
+	 */
 	public static void setCurrentElement(Element currentElement) {
 		ParseXML.currentElement = currentElement;
 	}

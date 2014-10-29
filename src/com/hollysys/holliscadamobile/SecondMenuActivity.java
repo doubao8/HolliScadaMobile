@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hollysys.Util.ParseXML;
 import com.hollysys.basic.ExitApplication;
+import com.hollysys.util.ParseXML;
 
 public class SecondMenuActivity extends ListActivity {
 	private List<Element> childElements;  //含有子菜单项

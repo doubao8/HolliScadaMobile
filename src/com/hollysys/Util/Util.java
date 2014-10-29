@@ -1,4 +1,4 @@
-package com.hollysys.Util;
+package com.hollysys.util;
 
 import java.lang.reflect.Field;
 

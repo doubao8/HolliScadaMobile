@@ -10,6 +10,8 @@ import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,24 +19,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hollysys.Util.ParseXML;
-import com.hollysys.Util.Util;
 import com.hollysys.basic.Dialog;
+import com.hollysys.basic.ExitApplication;
+import com.hollysys.holliscadamobile.MainActivity.MainAdapter;
+import com.hollysys.util.ParseXML;
+import com.hollysys.util.Util;
 
 public class MenuActivity extends ExpandableListActivity  {
 	private List<Element> groupList;
 	private List<List<Element>> childList;
 	private ExpandableListView myExpandableListView;
+	private Handler handler=null;  //处理更新界面
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ExitApplication.getInstance().addActivity(this);
 		setContentView(R.layout.activity_menu);
 		initializeData(); 
 		this.setTitle(this.getIntent().getExtras().getString("MenuName"));
@@ -110,6 +117,29 @@ public class MenuActivity extends ExpandableListActivity  {
 			}
 			
 		});
+		
+		// 更新界面
+		final Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				((MyexpandableListAdapter)myExpandableListView.getAdapter()).notifyDataSetChanged();
+			}
+		};
+		
+		new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						handler.post(runnable);
+						Thread.sleep(7000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
 
 	
@@ -126,6 +156,7 @@ public class MenuActivity extends ExpandableListActivity  {
 
 	public final class ViewHolder {
 		public ImageView img;
+		public ImageView updateImg;
 		public TextView title;
 	}
 	
@@ -186,6 +217,7 @@ public class MenuActivity extends ExpandableListActivity  {
 				groupHolder = new ViewHolder();
 				convertView = inflater.inflate(R.layout.text_image_line, null);
 				groupHolder.img = (ImageView) convertView.findViewById(R.id.menu_img);
+				groupHolder.updateImg = (ImageView) convertView.findViewById(R.id.update_img);
 				groupHolder.title = (TextView) convertView.findViewById(R.id.menu_title);
 				convertView.setTag(groupHolder);
 			} else {
@@ -194,9 +226,14 @@ public class MenuActivity extends ExpandableListActivity  {
 			groupHolder.title.setText(father.getAttribute("MenuName"));
 			if(!ParseXML.findChild(father).isEmpty()){
 				if (isExpanded)// ture is Expanded or false is not isExpanded
-					groupHolder.img.setImageResource(R.drawable.shou_suo1);
+					groupHolder.img.setImageResource(R.drawable.shou_suo);
 				else
-					groupHolder.img.setImageResource(R.drawable.zhan_kai1);
+					groupHolder.img.setImageResource(R.drawable.zhan_kai);
+			}
+			if(father.getAttribute("IsAlarmming").equals("0")){
+				groupHolder.updateImg.setVisibility(View.INVISIBLE);
+			}else{
+				groupHolder.updateImg.setVisibility(View.VISIBLE);
 			}
 			return convertView;
 		}
@@ -210,11 +247,17 @@ public class MenuActivity extends ExpandableListActivity  {
 				groupHolder = new ViewHolder();
 				convertView = inflater.inflate(R.layout.activity_second_menu, null);
 				groupHolder.title = (TextView) convertView.findViewById(R.id.second_menu);
+				groupHolder.updateImg = (ImageView) convertView.findViewById(R.id.update_img);
 				convertView.setTag(groupHolder);
 			}else {
 				groupHolder = (ViewHolder) convertView.getTag();
 			}
 			groupHolder.title.setText(child.getAttribute("MenuName"));
+			if(child.getAttribute("IsAlarmming").equals("0")){
+				groupHolder.updateImg.setVisibility(View.INVISIBLE);
+			}else{
+				groupHolder.updateImg.setVisibility(View.VISIBLE);
+			}
 			return convertView;
 		}
 

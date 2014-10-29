@@ -8,6 +8,8 @@ import org.w3c.dom.Element;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
@@ -27,16 +29,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import com.hollysys.Util.ParseXML;
-import com.hollysys.Util.Util;
 import com.hollysys.basic.Dialog;
 import com.hollysys.basic.ExitApplication;
+import com.hollysys.util.ParseXML;
+import com.hollysys.util.Util;
 
 public class MainActivity extends Activity implements OnGestureListener, OnTouchListener  {
 	private List<Element> childNodes;  //配置文件中读取的一级菜单项
 	private ViewFlipper myViewFlipper;  //保存动态生成的GridView
 	private GestureDetector myGestureDetector;  // 定义一个(手势识别类)对象的引用   
 	private LinearLayout dotLayout; //切换图形时底部原点显示效果
+	private Handler handler=null;  //处理更新界面
 	 
 
 
@@ -45,9 +48,12 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 		super.onCreate(savedInstanceState);
 		ExitApplication.getInstance().addActivity(this);
 		setContentView(R.layout.activity_main);
+		//创建属于主线程的handler  
+		handler=new Handler();  
+
 		
 		LayoutInflater factory = LayoutInflater.from(MainActivity.this);  
-		ParseXML.parseXml(this); //解析配置文件
+//		ParseXML.parseXml(this); //解析配置文件
 		Element root =ParseXML.getRoot();
 		childNodes = ParseXML.findChild(root);
 		myViewFlipper = (ViewFlipper) findViewById(R.id.menuViewFlipper);
@@ -61,15 +67,18 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 	 * @param factory
 	 */
 	private void initUI(LayoutInflater factory) {
-		int count = childNodes.size()/12+1; //每个界面最多显示十二个菜单项，计算界面数
+		int menuCount = calcMenuItemCount(); //计算每页显示菜单项个数
+		
+		int count = childNodes.size()/menuCount+1; //计算界面数
+		
 		for(int i=0; i<count; i++){
 			GridView view = (GridView) factory.inflate(R.layout.grid_view, null);
 			view.setOnTouchListener(this); //设置手势触摸监听器
 			List<Element> nodes = new ArrayList<Element>();
-			int num = (i+1)*12; //每个界面显示菜单项的个数
+			int num = (i+1)*menuCount; //每个界面显示菜单项的个数
 			if(num>childNodes.size())
 				num=childNodes.size();
-			for(int j=12*i; j<num; j++){
+			for(int j=menuCount*i; j<num; j++){
 				nodes.add(childNodes.get(j));
 			}
 			MainAdapter adapter = new MainAdapter(nodes);
@@ -92,6 +101,55 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 					);   
 			dotLayout.addView(imageView, params);
 		}
+		
+		//更新界面
+		final Runnable runnable =new Runnable(){
+			@Override
+			public void run() {
+				for(int i=0; i<myViewFlipper.getChildCount(); i++){
+					GridView view =(GridView) myViewFlipper.getChildAt(i);
+					MainAdapter adaper = (MainAdapter)view.getAdapter();
+					adaper.notifyDataSetChanged();
+				}	
+			}
+		};
+
+		new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						handler.post(runnable);
+						Thread.sleep(7000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}.start();
+			
+	}
+	/**
+	 * 计算每页显示菜单项个数
+	 * @return 子项个数
+	 */
+	private int calcMenuItemCount() {
+		ImageView image = new ImageView(MainActivity.this);
+		image.setBackgroundResource(R.drawable.mo_ren);
+		int w = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);  
+		int h = View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED);  
+		image.measure(w, h);  
+		int height =image.getMeasuredHeight();  
+		TextView text = new TextView(MainActivity.this);
+		text.measure(w, h);  
+
+		h = height+text.getMeasuredHeight()+ 30; //行间距为30
+		DisplayMetrics dm = getResources().getDisplayMetrics(); 
+		
+		int screenHeight = dm.heightPixels-h-h; //减去标题栏的高度，再减去预留空间高度
+		int menuCount = (screenHeight/h)*3; //每个界面菜单个数
+		return menuCount;
 	}
 
 	@Override
@@ -115,6 +173,7 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 	
 	public final class ViewHolder {
 		public ImageView img;
+		public ImageView updateImg;
 		public TextView title;
 	}
 	
@@ -154,6 +213,7 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 				holder = new ViewHolder();
 				convertView = View.inflate(MainActivity.this,R.layout.first_menu, null);
 				holder.img = (ImageView) convertView.findViewById(R.id.img);
+				holder.updateImg = (ImageView) convertView.findViewById(R.id.update_img);
 				holder.title = (TextView) convertView.findViewById(R.id.title);
 				convertView.setTag(holder);
 
@@ -172,10 +232,15 @@ public class MainActivity extends Activity implements OnGestureListener, OnTouch
 				if(!imgName.equals("")){
 					Integer imgCode = (Integer)Util.getPropertyValue(R.drawable.class,imgName);
 					if(null==imgCode)
-						imgCode = (Integer)Util.getPropertyValue(R.drawable.class,"mo_ren");
+						imgCode = R.drawable.mo_ren;
 					holder.img.setBackgroundResource(imgCode);
 				}
 				holder.title.setText(title);
+				if(node.getAttribute("IsAlarmming").equals("0")){
+					holder.updateImg.setVisibility(View.INVISIBLE);
+				}else{
+					holder.updateImg.setVisibility(View.VISIBLE);
+				}
 			}
 
 			return convertView;
