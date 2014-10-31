@@ -8,6 +8,7 @@ import com.hollysys.util.ParseXML;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -21,17 +22,19 @@ public class MyService extends Service {
 	private final IBinder mBinder = new LocalBinder();
 	private List<String> list; //随机种子
 	private Thread myThread;
+	private Handler handler=null;  //处理更新界面
+	private Runnable runnable; //处理界面程序体
 	
 	public class LocalBinder extends Binder {
-		MyService getService() {
-			Log.i("TAG", "getService ---> " + MyService.this);
+		public MyService getService() {
+			Log.i("HollySys", "getService ---> " + MyService.this);
 			return MyService.this;
 		}
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		Log.i("TAG", "MyService onBind");
+		Log.i("HollySys", "MyService onBind");
 		return mBinder;	
 		//如果这边不返回一个IBinder的接口实例，那么ServiceConnection中的onServiceConnected就不会被调用
 		//那么bind所具有的传递数据的功能也就体现不出来（这个返回值是被作为onServiceConnected中的第二个参数的）
@@ -40,8 +43,9 @@ public class MyService extends Service {
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
+		Log.i("HollySys", "MyService onCreate");
 		super.onCreate();
-		Log.i("TAG", "MyService onCreate");
+		
 		ParseXML.parseXml(this);
 		
 		list = new ArrayList<String>();
@@ -74,32 +78,37 @@ public class MyService extends Service {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
+		Log.i("HollySys", "MyService onDestroy");
 		super.onDestroy();
 		myThread.interrupt();
-		Log.i("TAG", "MyService onDestroy");
+		
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
+		Log.i("HollySys", "MyService onStart");
 		super.onStart(intent, startId);
-		Log.i("TAG", "MyService onStart");
+		
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		Log.i("TAG", "MyService onStartCommand");
+		Log.i("HollySys", "MyService onStartCommand");
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	public boolean onUnbind(Intent intent) {
 		// TODO Auto-generated method stub
-		Log.i("TAG", "MyService onUnbind");
-		return super.onUnbind(intent);
+		Log.i("HollySys", "MyService onUnbind");
+		this.handler=null;
+		this.runnable=null;
+		super.onUnbind(intent);
+		return true;
 	}
-	
+
 	/**
 	 * 随机产生报警数据
 	 * @author 黄德宝
@@ -117,14 +126,32 @@ public class MyService extends Service {
 	       while(!isInterrupted){
 	           try{
 	        	   randomSetIsAlarm(list);
-	        	   System.out.println(getName()+"重新生成数据------");
+	        	   if(null!=handler && null !=runnable)
+	        		   handler.post(runnable);
+//	        	   Log.i("HollySys", "重新生成数据");
 	               Thread.sleep(10000);
 	           }catch(InterruptedException e){
 	        	   break;
 	           }
 	       }
+	       Log.i("HollySys", "线程退出");
 	   }
 	}
 	
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
+	public Runnable getRunnable() {
+		return runnable;
+	}
+
+	public void setRunnable(Runnable runnable) {
+		this.runnable = runnable;
+	}
 }
 

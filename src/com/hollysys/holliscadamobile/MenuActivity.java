@@ -7,10 +7,13 @@ import org.w3c.dom.Element;
 
 import android.app.ActionBar;
 import android.app.ExpandableListActivity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +32,7 @@ import android.widget.TextView;
 import com.hollysys.basic.Dialog;
 import com.hollysys.basic.ExitApplication;
 import com.hollysys.holliscadamobile.MainActivity.MainAdapter;
+import com.hollysys.service.MyService;
 import com.hollysys.util.ParseXML;
 import com.hollysys.util.Util;
 
@@ -37,11 +41,16 @@ public class MenuActivity extends ExpandableListActivity  {
 	private List<List<Element>> childList;
 	private ExpandableListView myExpandableListView;
 	private Handler handler=null;  //处理更新界面
+	private ServiceConnection sc;  
+	private MyService myService;
+	private boolean isBind = false; //是否绑定服务
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ExitApplication.getInstance().addActivity(this);
+		//创建属于主线程的handler  
+		  
 		setContentView(R.layout.activity_menu);
 		initializeData(); 
 		this.setTitle(this.getIntent().getExtras().getString("MenuName"));
@@ -49,6 +58,9 @@ public class MenuActivity extends ExpandableListActivity  {
 		actionBar.setIcon(this.getIntent().getExtras().getInt("MenuIcon"));
 		actionBar.setDisplayUseLogoEnabled(false);
 		initListView();
+		
+		handler=new Handler();
+		setServiceConnection(); //设置与服务绑定连接
 	}
 
 	/**
@@ -80,7 +92,9 @@ public class MenuActivity extends ExpandableListActivity  {
 	                // TODO Auto-generated method stub
 	                if(childList.get(groupPosition).isEmpty()){
 	                	Element element = groupList.get(groupPosition); 
-	                	Dialog.alert(MenuActivity.this, element.getAttribute("MenuName"));
+	                	Intent intent = new Intent(MenuActivity.this, WebViewActivity.class);
+						intent.putExtra("Page", element.getAttribute("Page"));
+						startActivity(intent);
 	                	return true;
 	                }
 	                return false;
@@ -111,37 +125,54 @@ public class MenuActivity extends ExpandableListActivity  {
 					startActivity(intent);
 				}
 				else{
-					Dialog.alert(MenuActivity.this, element.getAttribute("MenuName"));
+					Intent intent = new Intent(MenuActivity.this, WebViewActivity.class);
+					intent.putExtra("Page", element.getAttribute("Page"));
+					startActivity(intent);
 				}
 				return true;
 			}
 			
 		});
-		
-		// 更新界面
-		final Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				((MyexpandableListAdapter)myExpandableListView.getAdapter()).notifyDataSetChanged();
-			}
-		};
-		
-		new Thread() {
-			public void run() {
-				while (true) {
-					try {
-						handler.post(runnable);
-						Thread.sleep(7000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			}
-		}.start();
 	}
 
+	// 设置ServiceConnection
+	private void setServiceConnection() {
+		sc = new ServiceConnection() {
+			/*
+			 * 只有在MyService中的onBind方法中返回一个IBinder实例才会在Bind的时候
+			 * 调用onServiceConnection回调方法
+			 * 第二个参数service就是MyService中onBind方法return的那个IBinder实例，可以利用这个来传递数据
+			 */
+			@Override
+			public void onServiceConnected(ComponentName name, IBinder service) {
+				// TODO Auto-generated method stub
+				myService = ((MyService.LocalBinder) service).getService();
+				// 更新界面
+				// 更新界面
+				final Runnable refreshUIRunnable = new Runnable() {
+					@Override
+					public void run() {
+						((MyexpandableListAdapter) myExpandableListView
+								.getExpandableListAdapter())
+								.notifyDataSetChanged();
+					}
+				};
+				myService.setHandler(handler);
+				myService.setRunnable(refreshUIRunnable);
+				Log.i("HollySys", "myService Connected");
+			}
+
+			@Override
+			public void onServiceDisconnected(ComponentName name) {
+				/*
+				 * 只有在service因异常而断开连接的时候，这个方法才会用到
+				 */
+				sc = null;
+				Log.i("TAG", "onServiceDisconnected : ServiceConnection --->"
+						+ sc);
+			}
+		};
+	}
 	
 	private void initializeData(){
 		Element currentElement = ParseXML.getCurrentElement();
@@ -268,6 +299,26 @@ public class MenuActivity extends ExpandableListActivity  {
 		}
 	}
  
+	@Override
+	public void onResume() {
+		Log.i("HollySys", "MenuActivity onResume");
+		//绑定服务
+		Intent intentService = new Intent(); 
+		intentService.setAction("com.hollysys.service.AlARM_SERVER");
+		bindService(intentService, sc, Context.BIND_AUTO_CREATE);
+		isBind=true;
+		super.onResume();
+	}
+	
+	@Override
+	public void onPause() {
+		Log.i("HollySys", "MenuActivity onPause");
+		if(isBind){//解除绑定服务
+			unbindService(sc);
+			isBind=false;
+		}
+		super.onPause();
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

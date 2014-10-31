@@ -1,8 +1,5 @@
 package com.hollysys.holliscadamobile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +13,7 @@ import android.widget.EditText;
 
 import com.hollysys.basic.Dialog;
 import com.hollysys.basic.ExitApplication;
-import com.hollysys.util.ParseXML;
+import com.hollysys.util.IPConfig;
 
 public class LoginActivity extends Activity {
 	
@@ -32,6 +29,7 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ExitApplication.getInstance().addActivity(this);
 		setContentView(R.layout.activity_login);
 		
 		this.setTitle(R.string.title_name);
@@ -96,6 +94,8 @@ public class LoginActivity extends Activity {
 					.toString());
 			intent.putExtra("loginInfo", bundle);
 			
+			IPConfig.readConfigFile(LoginActivity.this);  //读取ip地址和端口号
+			
 			startActivity(intent);
 
 		} else {
@@ -108,7 +108,13 @@ public class LoginActivity extends Activity {
 		Intent intent = new Intent();
 		intent.setAction("com.hollysys.service.AlARM_SERVER");
 		stopService(intent); //退出报警服务
-		Log.i("TAG", "LoginActivity Stop AlARM_SERVER");
+		Log.i("HollySys", "LoginActivity Stop AlARM_SERVER");
 		ExitApplication.getInstance().exit();
+	}
+	
+	@Override
+	public void onDestroy(){
+		Log.i("HollySys", "LoginActivity onDestroy");
+		super.onDestroy();
 	}
 }

@@ -8,6 +8,8 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,18 +21,19 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_name" 
+            android:label="@string/title_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SecondMenuActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_second_menu" >
+            android:label="@string/title_activity_second_menu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".MenuActivity"
@@ -40,12 +43,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.app.ExpandableListActivity" />
         </activity>
-        <service android:name="com.hollysys.service.MyService" android:exported="false">
-			<intent-filter>
-				<action android:name="com.hollysys.service.AlARM_SERVER" />
-				<category android:name="android.intent.category.default" />
-			</intent-filter>
-		</service>
+
+        <service
+            android:name="com.hollysys.service.MyService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.hollysys.service.AlARM_SERVER" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".WebViewActivity"
+            android:screenOrientation="landscape" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
     </application>
 
 </manifest>

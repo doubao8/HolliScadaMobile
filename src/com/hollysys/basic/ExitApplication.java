@@ -29,10 +29,10 @@ public class ExitApplication extends Application {
 
 	public void exit() {
 
-		for (Activity activity : activityList)
+		for (Activity activity : activityList){
 			activity.finish();
-
-		System.exit(0);
+		}
+//		System.exit(0);
 
 	}
 }
